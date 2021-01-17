@@ -1,0 +1,14 @@
+body {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+
+    margin: 0;
+    height: 100%;
+    font-family: 'ChicagoFLF', 'Times New Roman', 'Georgia', serif;
+    font-size: 12px;
+    font-weight: normal;
+    overflow: hidden;
+}
+
+
+
