@@ -18,11 +18,11 @@ function $i(id) { return document.getElementById(id); }
     var mouse_y=0;
 	var dir_x = 0;
 	var dir_y = 0;
+	var warp = false;
     var context;
     var key;
     var frame_period=100;
-    function init()
-    	{
+    function init(){
     	for(var i=0;i<n;i++)
     		{
     		star[i]=new Array(5);
@@ -40,8 +40,7 @@ function $i(id) { return document.getElementById(id); }
     	context.fillStyle='rgb(0,0,0)';
     	context.strokeStyle='rgb(255,255,255)';
     	}
-    function anim()
-    	{
+    function anim(){
     	mouse_x=cursor_x-x;
     	mouse_y=cursor_y-y;
     	context.fillRect(0,0,w,h);
@@ -71,8 +70,7 @@ function $i(id) { return document.getElementById(id); }
             setTimeout('anim()',frame_period);
           }
     	}
-    function release()
-    	{
+    function release(){
     	switch(key)
     		{
     		case 13:
@@ -80,8 +78,7 @@ function $i(id) { return document.getElementById(id); }
     			break;
     		}
     	}
-    function mouse_wheel(evt)
-    	{
+    function mouse_wheel(evt){
     	evt=evt||event;
 		//dir_x = (evt.x/w)-0.5;
 		//dir_y = (evt.y/h)-0.5;
@@ -94,10 +91,9 @@ function $i(id) { return document.getElementById(id); }
     		{
     		delta=-evt.detail/3;
     		}
-    	star_speed+=(delta>=0)?-0.25:0.25;
+    	star_speed+=(delta>=0)?-0.1:0.1;
     	}
-    function resize()
-    	{
+    function resize(){
     	newW=parseInt(document.documentElement.clientWidth);
     	newH=parseInt(document.documentElement.clientHeight);
 		if (newW !== w || newH !== h){
@@ -112,10 +108,20 @@ function $i(id) { return document.getElementById(id); }
 			init();
 		}
     	}
-	function start()
-	{
+	function start(){
 		resize();
 		anim();
+	}
+	function toggleWarp(){
+		if (warp){
+			context.fillStyle='rgb(0,0,0)';
+			star_speed /= 2
+			warp = false;
+		} else {
+			context.fillStyle='rgba(0,0,0,'+opacity+')';
+			star_speed *= 2
+			warp = true;
+		}
 	}
     document.onkeyup=release;
     document.onmousewheel=mouse_wheel; if(window.addEventListener) window.addEventListener('DOMMouseScroll',mouse_wheel,false);
